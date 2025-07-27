@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>証券コード株価検索</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">株価表示付き 証券コード検索</h1>
+    <div class="flex mb-4">
+      <input type="text" id="code" class="border p-2 w-full rounded-l" placeholder="証券コード（例: 7203）" />
+      <button id="search" class="bg-blue-500 text-white px-4 rounded-r">検索</button>
+    </div>
+    <div id="result" class="bg-white p-4 rounded shadow"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
