@@ -1,0 +1,39 @@
+name: CI Test and Auto Fix with Gemini CLI
+
+on:
+  push:
+    paths:
+      - fetch/fetch_stockdata.py
+      - fetch/test_fetch_stockdata.py
+  workflow_dispatch:
+
+jobs:
+  test-and-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: pip install yfinance pytest
+
+      - name: Run tests
+        run: pytest fetch/test_fetch_stockdata.py
+
+      - name: On failure, upload log
+        if: failure()
+        run: |
+          mkdir -p logs
+          pytest fetch/test_fetch_stockdata.py > logs/error.log || true
+        shell: bash
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-error-log
+          path: logs/error.log
