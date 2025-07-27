@@ -15,7 +15,9 @@ output = {}
 for code, name in companies.items():
     try:
         ticker = yf.Ticker(f"{code}.T")
-        data = ticker.history(period="1d")
+        data = ticker.history(period="2d")  # ← 2日分とる
+        if data.empty or len(data) < 2:
+            raise ValueError("データが取得できませんでした")
         last = data["Close"].iloc[-1]
         prev = data["Close"].iloc[-2]
         diff = round(last - prev, 2)
